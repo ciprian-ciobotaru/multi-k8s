@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: demoAPI
+  datasource:
+   url: jdbc:oracle:thin:@//${DB_HOSTNAME:10.40.2.16}:${DB_PORT:1521}/${DB_SID:SPIO}
+   username: spi
+   password: test123
+   driverClassName: oracle.jdbc.driver.OracleDriver   
+
+logging:
+ level:
+   root: INFO
+   org:
+    springframework: INFO
+   sdxro:
+    api:
+     logging: DEBUG
+file:  logs/demoapi/demoAPI.log
+
+log:
+ httpHeaderUUID: x-sdx-request-id
+ httpHeaderReqSourceHost: X-Forwarded-For
+ pattern: "[%date] [%level] [%X{THREAD_ID}] [%X{UUID}] [%X{TRANSACTION_ID}] [%X{SDX_PROCESS_ID}] [%X{X-Forwarded-For}] [%X{HTTP_METHOD}] [%X{ENDPOINT}] [%X{ENDPOINT_PARAMS}] [%X{SERVER_PORT}] [%X{USER_NAME}] [%X{SOAPAction}] [%X{HTTP_CODE}] [%logger{10}] [%file:%line] [%X{SCOPE}] [%X{METADATA_1}] [%X{METADATA_2}] [><[%msg]><] [%ex{full}]%n"
+ staticContentURIPattern: (^.*\\b(?i)(resources|WEB-INF)\\b.*$)
+
+logback:
+ folder: logs/demoapi
+ filename: demoAPI-v01.log
+pattern: "[%date] [%level] [%X{THREAD_ID}] [%X{UUID}] [%X{TRANSACTION_ID}] [%X{SDX_PROCESS_ID}] [%X{X-Forwarded-For}] [%X{HTTP_METHOD}] [%X{ENDPOINT}] [%X{ENDPOINT_PARAMS}] [%X{SERVER_PORT}] [%X{USER_NAME}] [%X{SOAPAction}] [%X{HTTP_CODE}] [%logger{10}] [%file:%line] [%X{SCOPE}] [%X{METADATA_1}] [%X{METADATA_2}] [><[%msg]><] [%ex{full}]%n"
+server:
+  port: 8890
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka
+  instance:
+    preferIpAddress: true
+  profiles:
+  active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream

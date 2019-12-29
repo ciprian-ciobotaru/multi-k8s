@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<springProperty scope="context" name="pattern" source="log.pattern"/>
+	<springProperty scope="context" name="logback.folder" source="logback.folder"/>
+	<springProperty scope="context" name="logback.filename" source="logback.filename"/>
+	<appender name="ServerFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logback.folder}/${logback.filename}</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${pattern}</pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logback.folder}/${logback.filename}-%d{dd-MM-yyyy}.log.zip</fileNamePattern>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="ServerConsole" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${pattern}</pattern>
+		</layout>
+	</appender>
+
+	<appender name="ASYNC-FILE" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="ServerFile"/>
+		<includeCallerData>true</includeCallerData>
+	</appender>
+
+	<logger name="com.demoapi" additivity="false">
+		<appender-ref ref="ASYNC-FILE"/>
+		<appender-ref ref="ServerConsole"/>
+	</logger>
+
+	<root>
+		<appender-ref ref="ASYNC-FILE"/>
+		<appender-ref ref="ServerConsole"/>
+	</root>
+
+</configuration>
