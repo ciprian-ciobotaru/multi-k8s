@@ -17,6 +17,6 @@ spec:
                   image: ciprianciobotaru/demoapi:latest
                   ports:
                     - containerPort: 8890
-            imagePullSecrets:
-                - name: regcred
+            #imagePullSecrets:
+            #    - name: regcred
                     
