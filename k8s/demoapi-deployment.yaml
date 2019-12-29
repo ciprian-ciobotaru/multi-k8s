@@ -14,7 +14,7 @@ spec:
         spec:
             containers:
                 - name: api
-                  image: registry.gitlab.com/ciprian.ciobotaru/demoapi:latest
+                  image: ciprianciobotaru/demoapi:latest
                   ports:
                     - containerPort: 8890
             imagePullSecrets:
