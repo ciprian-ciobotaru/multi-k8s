@@ -5,7 +5,8 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: nginx 
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    #nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
        
 spec:
   rules:
@@ -15,11 +16,11 @@ spec:
           #  backend:
           #    serviceName: demoapi-cluster-ip-service
           #    servicePort: 8890
-          - path: /?(.*)
+          - path: /
             backend:
               serviceName: client-cluster-ip-service
               servicePort: 3000
-          - path: /api/?(.*)
+          - path: /api/
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
